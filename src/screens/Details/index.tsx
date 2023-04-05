@@ -1,14 +1,17 @@
-import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
+import { useRoute } from '@react-navigation/native';
+import { DetailsScreenRouteProp } from 'navigation/types';
+import { Container, Title } from 'components/shared';
 
 const Details = () => {
+  const route = useRoute<DetailsScreenRouteProp>();
+
+  const { movieId } = route.params;
   return (
-    <View>
-      <Text>Details</Text>
-    </View>
+    <Container>
+      <Title>{`Details page ${movieId}`}</Title>
+    </Container>
   );
 };
 
 export default Details;
-
-const styles = StyleSheet.create({});
