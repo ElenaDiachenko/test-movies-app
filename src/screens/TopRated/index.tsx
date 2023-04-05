@@ -18,7 +18,7 @@ const TopRated: FC = () => {
       <Pressable
         style={{ height: 20 }}
         onPress={() => navigation.navigate('Details', { movieId: movie.id })}>
-        <Text> From TopRated</Text>
+        <Title> From TopRated</Title>
       </Pressable>
     </Container>
   );
