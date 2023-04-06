@@ -4,16 +4,22 @@ import { Theme } from 'styles/theme';
 import { Home } from 'screens/index';
 import MainStack from 'navigation/MainStack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-export default function App() {
+const App = () => {
+  const queryClient = new QueryClient();
   return (
-    <SafeAreaProvider>
-      <NavigationContainer>
-        <Theme>
-          <MainStack />
-        </Theme>
-        <StatusBar style="auto" />
-      </NavigationContainer>
-    </SafeAreaProvider>
+    <QueryClientProvider client={queryClient}>
+      <SafeAreaProvider>
+        <NavigationContainer>
+          <Theme>
+            <MainStack />
+          </Theme>
+          <StatusBar style="auto" />
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </QueryClientProvider>
   );
-}
+};
+
+export default App;

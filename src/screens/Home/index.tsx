@@ -10,7 +10,7 @@ const movie = {
 };
 const Home: FC = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
-
+  console.log(process.env.TMDB_API_KEY);
   return (
     <Container>
       <Title>Home</Title>
