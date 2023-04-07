@@ -1,77 +1,67 @@
 import React, { FC } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { Pressable } from 'react-native';
-import { Container, Title } from 'components/shared';
-import { HomeScreenNavigationProp } from 'navigation/types';
-import { useQuery, useQueries, UseQueryResult } from '@tanstack/react-query';
-import { MovieItemType, MoviesDataType } from 'types/data';
-import { fetchTrending, fetchPopular, fetchTopRated } from 'utils/tmdbApi';
+import { ScrollView } from 'react-native';
 
-const movie = {
-  id: 1,
-  title: ' First movie title',
-};
+import { Container } from 'components/shared';
+import { HomeScreenNavigationProp } from 'navigation/types';
+import { constants, movieRowType } from 'utils';
+
+import RowList from 'components/RowList';
+
 const Home: FC = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
-  const page = 3;
-  const { data: trendingMovies } = useQuery({
-    queryKey: ['trending-movies'],
-    queryFn: () => fetchTrending(page),
-  });
-  console.log(trendingMovies.results[1].original_title);
 
-  // const [trendingMovies, popularMovies, topRatedMovies] = useQueries<MoviesDataType[] | string[]>({
-  //   queries: [
-  //     {
-  //       queryKey: ['trending'],
-  //       queryFn: fetchTrending,
-  //     },
-  //     {
-  //       queryKey: ['popular'],
-  //       queryFn: fetchPopular,
-  //     },
-  //     {
-  //       queryKey: ['topRated'],
-  //       queryFn: fetchTopRated,
-  //     },
-  //   ],
+  // const page = 3;
+  // const {
+  //   data: trendingData,
+  //   isLoading: trendingIsLoading,
+  //   error: trendingError,
+  // } = useQuery({
+  //   queryKey: ['trending-movies'],
+  //   queryFn: () => API.fetchTrending(page),
+  // });
+  // const {
+  //   data: popularData,
+  //   isLoading: popularIsLoading,
+  //   error: popularError,
+  // } = useQuery({
+  //   queryKey: ['popular-movies'],
+  //   queryFn: () => API.fetchPopular(page),
+  // });
+  // const {
+  //   data: topRatedData,
+  //   isLoading: topRatedIsLoading,
+  //   error: topRatedError,
+  // } = useQuery({
+  //   queryKey: ['topRated-movies'],
+  //   queryFn: () => API.fetchTopRated(page),
   // });
 
-  // if (trendingMovies.isLoading || popularMovies.isLoading || topRatedMovies.isLoading)
+  // if (trendingIsLoading || popularIsLoading || topRatedIsLoading)
   //   return (
   //     <Container>
   //       <Title>Loading...</Title>
   //     </Container>
   //   );
-  // if (trendingMovies.error || popularMovies.error || topRatedMovies.error)
+  // if (trendingError || popularError || topRatedError)
   //   return (
   //     <Container>
   //       <Title>An error has occured...</Title>
   //     </Container>
   //   );
-  // console.log(
-  //   'trendingMovies####### :',
-  //   trendingMovies,
-  //   'popularMovies####### :',
-  //   popularMovies,
-  //   'topRatedMovies####### :',
-  //   topRatedMovies
-  // );
-  // const page = 1;
-  // const { isLoading, error, data, refetch } = useQuery({
-  //   queryKey: ['movies'],
-  //   queryFn: () => fetchTrending,
-  // });
-  // console.log(data);
 
   return (
     <Container>
-      <Title>Home</Title>
-      <Pressable
-        style={{ height: 20 }}
-        onPress={() => navigation.navigate('Details', { movieId: movie.id })}>
-        <Title>{movie.title}</Title>
-      </Pressable>
+      <ScrollView>
+        {constants.movieRows.map((row: movieRowType) => (
+          <RowList
+            key={row.id}
+            title={row.title}
+            fetchData={row.fetchData}
+            queryKey={row.queryKey}
+          />
+        ))}
+      </ScrollView>
     </Container>
   );
 };
