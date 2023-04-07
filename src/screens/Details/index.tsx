@@ -1,7 +1,7 @@
 import React from 'react';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons';
-import { DetailsScreenRouteProp } from 'navigation/types';
+import { DetailsScreenRouteProp, DetailsScreenNavigationProp } from 'navigation/types';
 import { useQuery } from '@tanstack/react-query';
 import { ScrollView, View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
@@ -12,6 +12,8 @@ import { PosterBox, PlayButton, AddButton } from './styles';
 
 const Details = () => {
   const route = useRoute<DetailsScreenRouteProp>();
+  const navigation = useNavigation<DetailsScreenNavigationProp>();
+
   const { movieId } = route.params;
   const { data, isLoading, error } = useQuery({
     queryKey: ['movies', movieId],
@@ -45,7 +47,7 @@ const Details = () => {
             style={StyleSheet.absoluteFill}
           />
 
-          <PlayButton>
+          <PlayButton onPress={() => navigation.navigate('Player', { movieId: data.id })}>
             <AntDesign name="caretright" size={30} color="black" />
           </PlayButton>
           <AddButton>

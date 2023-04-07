@@ -19,13 +19,13 @@ const MainStack = () => {
           title: 'Movie detail',
         }}
       />
-      {/* <Stack.Screen
+      <Stack.Screen
         name="Player"
         component={Screens.Player}
         options={{
           title: 'Play video',
         }}
-      /> */}
+      />
     </Stack.Navigator>
   );
 };
