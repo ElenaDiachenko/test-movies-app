@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { RowContainer, RowItem } from './styles';
+import { RowContainer, RowItem, RowItemTitle, RowItemTitleBox } from './styles';
 import { View, Image, StyleSheet } from 'react-native';
 import { MoviesDataType } from 'types/data';
-import { Container, Title } from 'components/shared';
+import { Title } from 'components/shared';
 import { constants } from 'utils';
 import { useNavigation } from '@react-navigation/native';
 import { HomeScreenNavigationProp } from 'navigation/types';
@@ -58,6 +58,9 @@ const RowList: FC<RowPropsType> = ({ title, fetchData, queryKey }) => {
               style={StyleSheet.absoluteFill}
               resizeMode="cover"
             />
+            <RowItemTitleBox>
+              <RowItemTitle>{item.title}</RowItemTitle>
+            </RowItemTitleBox>
           </RowItem>
         )}
       />

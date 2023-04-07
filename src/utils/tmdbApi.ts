@@ -20,7 +20,7 @@ export const fetchPopular = async (page = 1): Promise<MoviesDataType> => {
     .then((res) => res.data);
 };
 
-export const fetchMovieById = async (movieId: string): Promise<MovieItemType> => {
+export const fetchMovieById = async (movieId: number): Promise<MovieItemType> => {
   return $api
     .get<MovieItemType>(`movie/${movieId}?api_key=${TMDB_API_KEY}&language=en-US`)
     .then((res) => res.data);
