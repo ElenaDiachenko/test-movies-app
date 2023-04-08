@@ -3,10 +3,10 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons';
 import { DetailsScreenRouteProp, DetailsScreenNavigationProp } from 'navigation/types';
 import { useQuery } from '@tanstack/react-query';
-import { ScrollView, View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { ScrollView, View, Image, StyleSheet, Text } from 'react-native';
 
 import { Container, Title } from 'components/shared';
-import { MovieItemType } from 'types';
+
 import { API, constants } from 'utils';
 import { PosterBox, PlayButton, AddButton } from './styles';
 

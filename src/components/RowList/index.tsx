@@ -2,12 +2,11 @@ import React, { FC } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { RowContainer, RowItem, RowItemTitle, RowItemTitleBox } from './styles';
 import { View, Image, StyleSheet } from 'react-native';
-import { MoviesDataType } from 'types/data';
+import { MoviesDataType, MovieItemType } from 'types';
 import { Title } from 'components/shared';
 import { constants } from 'utils';
 import { useNavigation } from '@react-navigation/native';
 import { HomeScreenNavigationProp } from 'navigation/types';
-import { MovieItemType } from 'types';
 
 type RowPropsType = {
   title: string;
