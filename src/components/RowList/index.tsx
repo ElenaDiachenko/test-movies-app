@@ -4,6 +4,8 @@ import { RowContainer, RowItem, RowItemTitle, RowItemTitleBox } from './styles';
 import { View, Image, StyleSheet, ActivityIndicator } from 'react-native';
 import { MovieItemType, TransformedMoviesType } from 'types';
 import { Title } from 'components/shared';
+import Sceleton from 'components/Sceleton';
+
 import { constants } from 'utils';
 import { useNavigation } from '@react-navigation/native';
 import { HomeScreenNavigationProp } from 'navigation/types';
@@ -52,12 +54,6 @@ const RowList: FC<RowPropsType> = ({ title, fetchData, queryKey }) => {
     []
   );
 
-  if (isLoading)
-    return (
-      <View>
-        <Title>Loading...</Title>
-      </View>
-    );
   if (error)
     return (
       <View>
@@ -68,18 +64,27 @@ const RowList: FC<RowPropsType> = ({ title, fetchData, queryKey }) => {
   return (
     <View style={{ paddingVertical: 12 }}>
       <Title>{title}</Title>
-      {data && (
+      {isLoading ? (
+        <Sceleton />
+      ) : data ? (
         <RowContainer
           horizontal
           data={data.pages.map((page) => page.movies).flat()}
           showsHorizontalScrollIndicator={false}
           onEndReached={loadMore}
           onEndReachedThreshold={0.5}
-          ListFooterComponent={isFetchingNextPage ? <ActivityIndicator /> : null}
+          ListFooterComponent={
+            isFetchingNextPage ? (
+              <ActivityIndicator
+                size={30}
+                style={{ height: 220, alignSelf: 'center', marginLeft: 6 }}
+              />
+            ) : null
+          }
           ItemSeparatorComponent={() => <View style={{ width: 12 }} />}
           renderItem={renderItem}
         />
-      )}
+      ) : null}
     </View>
   );
 };
