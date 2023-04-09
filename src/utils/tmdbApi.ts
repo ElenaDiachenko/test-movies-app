@@ -2,22 +2,50 @@ import $api from './instanceTMDB';
 import { MoviesDataType, MovieItemType, VideoDataType } from 'types';
 // import { TMDB_API_KEY } from '@env';
 const TMDB_API_KEY = 'a5f5962e6f7f3d792e77e5ce1e0a6398';
-export const fetchTrending = async (page = 1): Promise<MoviesDataType> => {
+
+type TransformedMoviesType = {
+  nextPage: number | undefined;
+  prevPage: number | undefined;
+  movies: MovieItemType[];
+};
+
+export const fetchTrending = async (page: number): Promise<TransformedMoviesType> => {
   return $api
     .get<MoviesDataType>(`/trending/movie/day?api_key=${TMDB_API_KEY}&language=en-US&page=${page}`)
-    .then((res) => res.data);
+    .then((res) => {
+      const hasNext = page < res.data.total_pages;
+      return {
+        nextPage: hasNext ? page + 1 : undefined,
+        prevPage: page > 1 ? page - 1 : undefined,
+        movies: res.data.results,
+      };
+    });
 };
 
-export const fetchTopRated = async (page = 1): Promise<MoviesDataType> => {
+export const fetchTopRated = async (page: number): Promise<TransformedMoviesType> => {
   return $api
     .get<MoviesDataType>(`movie/top_rated?api_key=${TMDB_API_KEY}&language=en-US&page=${page}`)
-    .then((res) => res.data);
+    .then((res) => {
+      const hasNext = page < res.data.total_pages;
+      return {
+        nextPage: hasNext ? page + 1 : undefined,
+        prevPage: page > 1 ? page - 1 : undefined,
+        movies: res.data.results,
+      };
+    });
 };
 
-export const fetchPopular = async (page = 1): Promise<MoviesDataType> => {
+export const fetchPopular = async (page: number): Promise<TransformedMoviesType> => {
   return $api
     .get<MoviesDataType>(`movie/popular?api_key=${TMDB_API_KEY}&language=en-US&page=${page}`)
-    .then((res) => res.data);
+    .then((res) => {
+      const hasNext = page < res.data.total_pages;
+      return {
+        nextPage: hasNext ? page + 1 : undefined,
+        prevPage: page > 1 ? page - 1 : undefined,
+        movies: res.data.results,
+      };
+    });
 };
 
 export const fetchMovieById = async (movieId: number): Promise<MovieItemType> => {
