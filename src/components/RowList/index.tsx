@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, memo, useCallback } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { RowContainer, RowItem, RowItemTitle, RowItemTitleBox } from './styles';
 import { View, Image, StyleSheet, ActivityIndicator } from 'react-native';
@@ -23,11 +23,34 @@ const RowList: FC<RowPropsType> = ({ title, fetchData, queryKey }) => {
       getNextPageParam: (prevData) => prevData.nextPage,
       queryFn: ({ pageParam = 1 }) => fetchData(pageParam),
     });
+
   const loadMore = () => {
     if (hasNextPage) {
       fetchNextPage();
     }
   };
+
+  const renderItem = useCallback(
+    ({ item }: { item: MovieItemType }) => (
+      <RowItem
+        onPress={() => navigation.navigate('Details', { movieId: item.id })}
+        style={{
+          aspectRatio: constants.ASPECT_RATIO,
+        }}>
+        <Image
+          source={{
+            uri: `${constants.TMDB_IMAGE_URL}${item.poster_path}`,
+          }}
+          style={StyleSheet.absoluteFill}
+          resizeMode="cover"
+        />
+        <RowItemTitleBox>
+          <RowItemTitle>{item.title}</RowItemTitle>
+        </RowItemTitleBox>
+      </RowItem>
+    ),
+    []
+  );
 
   if (isLoading)
     return (
@@ -51,31 +74,14 @@ const RowList: FC<RowPropsType> = ({ title, fetchData, queryKey }) => {
           data={data.pages.map((page) => page.movies).flat()}
           showsHorizontalScrollIndicator={false}
           onEndReached={loadMore}
-          onEndReachedThreshold={0.3}
+          onEndReachedThreshold={0.5}
           ListFooterComponent={isFetchingNextPage ? <ActivityIndicator /> : null}
           ItemSeparatorComponent={() => <View style={{ width: 12 }} />}
-          renderItem={({ item }: { item: MovieItemType }) => (
-            <RowItem
-              onPress={() => navigation.navigate('Details', { movieId: item.id })}
-              style={{
-                aspectRatio: constants.ASPECT_RATIO,
-              }}>
-              <Image
-                source={{
-                  uri: `${constants.TMDB_IMAGE_URL}${item.poster_path}`,
-                }}
-                style={StyleSheet.absoluteFill}
-                resizeMode="cover"
-              />
-              <RowItemTitleBox>
-                <RowItemTitle>{item.title}</RowItemTitle>
-              </RowItemTitleBox>
-            </RowItem>
-          )}
+          renderItem={renderItem}
         />
       )}
     </View>
   );
 };
 
-export default RowList;
+export default memo(RowList);
