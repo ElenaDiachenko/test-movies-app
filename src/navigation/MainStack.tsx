@@ -20,8 +20,8 @@ const MainStack = () => {
         }}
       />
       <Stack.Screen
-        name="Player"
-        component={Screens.Player}
+        name="PlayVideo"
+        component={Screens.PlayVideo}
         options={{
           title: 'Play video',
         }}

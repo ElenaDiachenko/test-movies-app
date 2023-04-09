@@ -47,7 +47,7 @@ const Details = () => {
             style={StyleSheet.absoluteFill}
           />
 
-          <PlayButton onPress={() => navigation.navigate('Player', { movieId: data.id })}>
+          <PlayButton onPress={() => navigation.navigate('PlayVideo', { movieId: data.id })}>
             <AntDesign name="caretright" size={30} color="black" />
           </PlayButton>
           <AddButton>

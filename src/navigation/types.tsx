@@ -6,7 +6,7 @@ export type HomeStackNavigatorParamList = {
   Details: {
     movieId: number;
   };
-  Player: {
+  PlayVideo: {
     movieId: number;
   };
 };
@@ -17,7 +17,7 @@ export type HomeScreenNavigationProp = NativeStackNavigationProp<
 >;
 export type DetailsScreenNavigationProp = NativeStackNavigationProp<
   HomeStackNavigatorParamList,
-  'Player'
+  'PlayVideo'
 >;
 export type HomeTabParamList = {
   Home: undefined;
@@ -26,4 +26,4 @@ export type HomeTabParamList = {
 };
 
 export type DetailsScreenRouteProp = RouteProp<HomeStackNavigatorParamList, 'Details'>;
-export type PlayerScreenRouteProp = RouteProp<HomeStackNavigatorParamList, 'Player'>;
+export type PlayerScreenRouteProp = RouteProp<HomeStackNavigatorParamList, 'PlayVideo'>;
