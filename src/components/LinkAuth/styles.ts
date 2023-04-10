@@ -3,9 +3,6 @@ import styled, { css } from 'styled-components/native';
 export const LinkBox = styled.TouchableOpacity`
   ${({ theme }) => css`
     margin: 18px auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   `}
 `;
 

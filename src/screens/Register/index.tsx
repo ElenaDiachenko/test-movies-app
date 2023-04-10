@@ -1,9 +1,9 @@
 import React, { FC, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import { AuthScreenNavigationProp } from 'navigation/types';
-
+import { RegisterTitle } from './styles';
 import { FormContainer } from 'components/shared';
 import { Input } from 'components/Input';
 import { Button } from 'components/Button';
@@ -40,6 +40,7 @@ const Register: FC = () => {
   return (
     <FormContainer>
       <View style={{ width: '100%' }}>
+        <RegisterTitle>REGISTER</RegisterTitle>
         <Input placeholder={'Name'} value={name} setValue={setName} />
         <Input placeholder={'Email'} value={email} setValue={setEmail} />
         <Input

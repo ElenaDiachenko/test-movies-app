@@ -1,12 +1,11 @@
 import styled, { css } from 'styled-components/native';
 
-export const Container = styled.SafeAreaView`
+export const RegisterTitle = styled.Text`
   ${({ theme }) => css`
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 30px;
-    background-color: ${theme.colors.BACKGROUND_COLOR};
+    font-weight: 500;
+    font-size: 27px;
+    margin-bottom: 24px;
+    align-self: center;
+    color: ${theme.colors.TITLE_COLOR};
   `}
 `;
