@@ -5,15 +5,17 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { Theme } from 'styles/theme';
 import MainStack from 'navigation/MainStack';
+import AuthStack from 'navigation/AuthStack';
 
 const App = () => {
   const queryClient = new QueryClient();
+
   return (
     <QueryClientProvider client={queryClient}>
       <SafeAreaProvider>
         <NavigationContainer>
           <Theme>
-            <MainStack />
+            <AuthStack />
           </Theme>
           <StatusBar style="auto" />
         </NavigationContainer>

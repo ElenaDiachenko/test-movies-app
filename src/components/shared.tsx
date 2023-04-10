@@ -27,5 +27,16 @@ export const Subtitle = styled.Text`
   `}
 `;
 
+export const FormContainer = styled.SafeAreaView`
+  ${({ theme }) => css`
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 30px;
+    background-color: ${theme.colors.BACKGROUND_COLOR};
+  `}
+`;
+
 export const ScreenWidth = Dimensions.get('screen').width;
 export const ScreenHeight = Dimensions.get('screen').height;

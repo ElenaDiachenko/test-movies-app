@@ -25,5 +25,15 @@ export type HomeTabParamList = {
   TopRated: undefined;
 };
 
+export type AuthStackParamList = {
+  Register: undefined;
+  Login: undefined;
+};
+
+export type AuthScreenNavigationProp = NativeStackNavigationProp<
+  AuthStackParamList,
+  keyof AuthStackParamList
+>;
+
 export type DetailsScreenRouteProp = RouteProp<HomeStackNavigatorParamList, 'Details'>;
 export type PlayerScreenRouteProp = RouteProp<HomeStackNavigatorParamList, 'PlayVideo'>;

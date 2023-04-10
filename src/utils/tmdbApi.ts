@@ -1,7 +1,6 @@
 import $api from './instanceTMDB';
 import { MoviesDataType, MovieItemType, VideoDataType } from 'types';
-// import { TMDB_API_KEY } from '@env';
-const TMDB_API_KEY = 'a5f5962e6f7f3d792e77e5ce1e0a6398';
+import { TMDB_API_KEY } from '@env';
 
 type TransformedMoviesType = {
   nextPage: number | undefined;

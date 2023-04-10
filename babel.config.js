@@ -5,9 +5,13 @@ module.exports = function (api) {
     plugins: [
       '@babel/plugin-proposal-export-namespace-from',
       'react-native-reanimated/plugin',
-      'module:react-native-dotenv',
-    ],
-    plugins: [
+      [
+        'module:react-native-dotenv',
+        {
+          moduleName: '@env',
+          path: '.env',
+        },
+      ],
       [
         'module-resolver',
         {
@@ -21,9 +25,27 @@ module.exports = function (api) {
             types: './src/types',
             src: './src',
           },
-          extensions: ['.js', '.jsx', '.ts', '.tsx'],
+          // extensions: ['.js', '.jsx', '.ts', '.tsx'],
         },
       ],
     ],
+    // plugins: [
+    //   [
+    //     'module-resolver',
+    //     {
+    //       alias: {
+    //         navigation: './src/navigation',
+    //         components: './src/components',
+    //         screens: './src/screens',
+    //         stores: './src/stores',
+    //         utils: './src/utils',
+    //         styles: './src/styles',
+    //         types: './src/types',
+    //         src: './src',
+    //       },
+    //       extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    //     },
+    //   ],
+    // ],
   };
 };

@@ -13,5 +13,6 @@
       "src/*": ["src/*"]
     },
     "strict": true
-  }
+  },
+  "typeRoots": ["./types"]
 }

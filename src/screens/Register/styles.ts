@@ -1,17 +1,12 @@
 import styled, { css } from 'styled-components/native';
 
-export const Container = styled.View`
+export const Container = styled.SafeAreaView`
   ${({ theme }) => css`
     flex: 1;
-    background-color: ${theme.colors.BACKGROUND_COLOR};
-
-    align-items: center;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
-  `}
-`;
-
-export const Title = styled.Text`
-  ${({ theme }) => css`
-    color: ${theme.colors.PRIMARY_COLOR};
+    padding: 30px;
+    background-color: ${theme.colors.BACKGROUND_COLOR};
   `}
 `;
