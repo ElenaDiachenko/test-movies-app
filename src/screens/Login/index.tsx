@@ -9,6 +9,11 @@ import { Input } from 'components/Input';
 import { Button } from 'components/Button';
 import { LinkAuth } from 'components/LinkAuth';
 
+export type LoginCredentials = {
+  email: string;
+  password: string;
+};
+
 const Login: FC = () => {
   const navigation = useNavigation<AuthScreenNavigationProp>();
 

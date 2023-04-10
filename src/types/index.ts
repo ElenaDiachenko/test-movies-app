@@ -47,3 +47,14 @@ export interface VideoDataItemType {
   published_at: string;
   id: string;
 }
+
+export type User = {
+  name?: string;
+  email: string;
+};
+
+export type SavedMovie = {
+  id: number;
+  title: string;
+  poster_path: string;
+};
