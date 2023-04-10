@@ -1,7 +1,9 @@
 import React, { FC, useState } from 'react';
 import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { shallow } from 'zustand/shallow';
 
+import { useStore } from 'stores/store';
 import { AuthScreenNavigationProp } from 'navigation/types';
 import { LoginTitle } from './styles';
 import { FormContainer } from 'components/shared';
@@ -19,19 +21,25 @@ const Login: FC = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
+
+  const { loading, error, login } = useStore(
+    (state) => ({
+      loading: state.loading,
+      error: state.error,
+      login: state.loginUser,
+    }),
+    shallow
+  );
 
   const navigate = () => navigation.navigate('Register');
 
   const onSubmit = async () => {
-    setLoading(true);
-
     const credentials = {
       email,
       password,
     };
-    console.log(credentials);
-    setLoading(false);
+    console.log(credentials, 'login');
+    login(credentials);
     reset();
   };
   const reset = () => {
@@ -52,7 +60,7 @@ const Login: FC = () => {
           secureTextEntry={true}
         />
         <Button text="Sign Up" onPress={onSubmit} loading={loading} />
-        <LinkAuth title="Don't have an account? Sign Up" navigate={navigate} />
+        <LinkAuth title="Don't have an account? Sign In" navigate={navigate} />
       </View>
     </FormContainer>
   );
