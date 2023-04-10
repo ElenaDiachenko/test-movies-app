@@ -14,14 +14,16 @@ export const Container = styled(SafeAreaView)`
 export const Title = styled.Text`
   ${({ theme }) => css`
     color: ${theme.colors.TITLE_COLOR};
-    font-weight: 600;
-    font-size: 18px;
+    font-weight: 700;
+    font-size: 21px;
   `}
 `;
 
-export const RowContainerStyled = styled(FlatList)`
+export const Subtitle = styled.Text`
   ${({ theme }) => css`
-    color: ${theme.colors.TITLE_COLOR};
+    color: ${theme.colors.SECONDARY_COLOR};
+    font-weight: 400;
+    font-size: 15px;
   `}
 `;
 

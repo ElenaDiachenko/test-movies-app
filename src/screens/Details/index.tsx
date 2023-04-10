@@ -1,14 +1,15 @@
 import React from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { AntDesign } from '@expo/vector-icons';
-import { DetailsScreenRouteProp, DetailsScreenNavigationProp } from 'navigation/types';
 import { useQuery } from '@tanstack/react-query';
-import { ScrollView, View, Image, StyleSheet, Text } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
+import { ScrollView, Image, StyleSheet, Text, ActivityIndicator, View } from 'react-native';
 
-import { Container, Title } from 'components/shared';
+import { GenreDataType } from 'types';
+import { DetailsScreenRouteProp, DetailsScreenNavigationProp } from 'navigation/types';
+import { PosterBox, PlayButton, AddButton, Overview, AdultContainer, Rating } from './styles';
+import { Container, Title, ScreenWidth, ScreenHeight, Subtitle } from 'components/shared';
 
 import { API, constants } from 'utils';
-import { PosterBox, PlayButton, AddButton } from './styles';
 
 const Details = () => {
   const route = useRoute<DetailsScreenRouteProp>();
@@ -22,16 +23,17 @@ const Details = () => {
 
   if (isLoading)
     return (
-      <View>
-        <Title>Loading...</Title>
-      </View>
+      <Container>
+        <ActivityIndicator size={ScreenHeight > ScreenWidth ? ScreenWidth / 6 : ScreenHeight / 6} />
+      </Container>
     );
   if (error)
     return (
-      <View>
+      <Container>
         <Title>An error has occured...</Title>
-      </View>
+      </Container>
     );
+
   return (
     <Container>
       <ScrollView>
@@ -54,8 +56,28 @@ const Details = () => {
             <AntDesign name="plus" size={30} color="black" />
           </AddButton>
         </PosterBox>
-        <Title>{data.title}</Title>
-        <Text style={{ color: 'white', fontSize: 15, marginTop: 12 }}>{data.overview}</Text>
+        <View style={{ paddingHorizontal: 12 }}>
+          <View style={{ flexDirection: 'row', marginBottom: 6 }}>
+            <Rating>
+              {data.vote_average
+                ? (data.vote_average * 10).toFixed(0).toString().split('').join('.')
+                : 0}
+            </Rating>
+
+            <AdultContainer>
+              <Text style={{ fontWeight: '700' }}>{data.adult ? '18+' : '12+'}</Text>
+            </AdultContainer>
+          </View>
+          <View style={{ flexDirection: 'row' }}>
+            <Title>{data.title}</Title>
+            <Overview>{`  ( ${data.release_date.slice(0, 4)} )`}</Overview>
+          </View>
+          <Subtitle style={{ textDecorationLine: 'underline' }}>
+            Genres: {data.genres.map((genre: GenreDataType) => genre?.name).join(' | ')}
+          </Subtitle>
+
+          <Overview style={{ marginTop: 12 }}>{data.overview}</Overview>
+        </View>
       </ScrollView>
     </Container>
   );

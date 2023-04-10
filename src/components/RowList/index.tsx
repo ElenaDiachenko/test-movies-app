@@ -1,14 +1,15 @@
 import React, { FC, memo, useCallback } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { RowContainer, RowItem, RowItemTitle, RowItemTitleBox } from './styles';
 import { View, Image, StyleSheet, ActivityIndicator } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
+import { RowContainer, RowItem, RowItemTitle, RowItemTitleBox } from './styles';
 import { MovieItemType, TransformedMoviesType } from 'types';
-import { Title } from 'components/shared';
+import { HomeScreenNavigationProp } from 'navigation/types';
+import { Title, Container } from 'components/shared';
 import Sceleton from 'components/Sceleton';
 
 import { constants } from 'utils';
-import { useNavigation } from '@react-navigation/native';
-import { HomeScreenNavigationProp } from 'navigation/types';
 
 type RowPropsType = {
   title: string;
@@ -56,9 +57,9 @@ const RowList: FC<RowPropsType> = ({ title, fetchData, queryKey }) => {
 
   if (error)
     return (
-      <View>
+      <Container>
         <Title>An error has occured...</Title>
-      </View>
+      </Container>
     );
 
   return (

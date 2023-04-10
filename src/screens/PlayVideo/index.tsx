@@ -1,10 +1,10 @@
 import React, { FC, useState } from 'react';
 import { useRoute } from '@react-navigation/native';
 import { useQuery } from '@tanstack/react-query';
-import { ScrollView, View } from 'react-native';
+import { ScrollView, View, ActivityIndicator } from 'react-native';
 
 import Player from 'components/Player';
-import { Container, Title } from 'components/shared';
+import { Container, Title, ScreenHeight, ScreenWidth } from 'components/shared';
 import { PlayerScreenRouteProp } from 'navigation/types';
 import { VideoDataType, VideoDataItemType } from 'types';
 import { API } from 'utils';
@@ -23,29 +23,33 @@ const PlayVideo: FC = () => {
 
   if (isLoading)
     return (
-      <View>
-        <Title>Loading...</Title>
-      </View>
+      <Container>
+        <ActivityIndicator size={ScreenHeight > ScreenWidth ? ScreenWidth / 6 : ScreenHeight / 6} />
+      </Container>
     );
   if (error)
     return (
-      <View>
+      <Container>
         <Title>An error has occured...</Title>
-      </View>
+      </Container>
     );
 
   return (
     <Container>
-      <ScrollView>
-        {data.results.map((video: VideoDataItemType) => (
-          <Player
-            key={video.key}
-            videoId={video.key}
-            currentVideo={currentVideo}
-            setCurrentVideo={setCurrentVideo}
-          />
-        ))}
-      </ScrollView>
+      {data.results.length ? (
+        <ScrollView>
+          {data.results.map((video: VideoDataItemType) => (
+            <Player
+              key={video.key}
+              videoId={video.key}
+              currentVideo={currentVideo}
+              setCurrentVideo={setCurrentVideo}
+            />
+          ))}
+        </ScrollView>
+      ) : (
+        <Title>No video </Title>
+      )}
     </Container>
   );
 };
