@@ -1,0 +1,75 @@
+import React, { memo, useCallback, useEffect } from 'react';
+import { View, Image, StyleSheet } from 'react-native';
+import { shallow } from 'zustand/shallow';
+import { useNavigation } from '@react-navigation/native';
+
+import { useStore } from 'stores/store';
+import { HomeScreenNavigationProp } from 'navigation/types';
+import { ListContainer, ListItem, ItemTitle, TitleBox } from './styles';
+import ListItemSceleton from 'components/ListItemSceleton';
+import { Container, Title } from 'components/shared';
+
+import { constants } from 'utils';
+import { SavedMovie } from 'types';
+
+const MovieList = () => {
+  const navigation = useNavigation<HomeScreenNavigationProp>();
+  const { movies, deleteMovie, setMovies, isLoading, error } = useStore(
+    (state) => ({
+      error: state.errorMovies,
+      movies: state.movies,
+      setMovies: state.setSavedMovies,
+      isLoading: state.loadingMovies,
+      deleteMovie: state.deleteSavedMovie,
+    }),
+    shallow
+  );
+  useEffect(() => {
+    setMovies();
+  }, []);
+
+  const renderItem = useCallback(
+    ({ item }: { item: SavedMovie }) => (
+      <ListItem
+        onPress={() => navigation.navigate('Details', { movieId: item.id })}
+        style={{
+          aspectRatio: constants.ASPECT_RATIO,
+        }}>
+        <Image
+          source={{
+            uri: `${constants.TMDB_IMAGE_URL}${item.poster_path}`,
+          }}
+          style={StyleSheet.absoluteFill}
+          resizeMode="cover"
+        />
+        <TitleBox>
+          <ItemTitle>{item.title}</ItemTitle>
+        </TitleBox>
+      </ListItem>
+    ),
+    []
+  );
+
+  if (error)
+    return (
+      <Container>
+        <Title>An error has occured...</Title>
+      </Container>
+    );
+
+  return (
+    <View style={{ paddingBottom: 12 }}>
+      {isLoading ? (
+        <ListItemSceleton />
+      ) : movies.length ? (
+        <ListContainer data={movies} numColumns={2} renderItem={renderItem} />
+      ) : (
+        <Container>
+          <Title>No saved movie... </Title>
+        </Container>
+      )}
+    </View>
+  );
+};
+
+export default memo(MovieList);
