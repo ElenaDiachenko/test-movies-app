@@ -38,6 +38,7 @@ export const createAuthSlice: StateCreator<
     set({ loading: true });
     try {
       await onAuthStateChanged(auth, (currentUser) => {
+        console.log(currentUser, 'currentUser');
         if (currentUser?.email) {
           set({
             authUser: { email: currentUser.email },

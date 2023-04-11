@@ -22,7 +22,7 @@ export type DetailsScreenNavigationProp = NativeStackNavigationProp<
 export type HomeTabParamList = {
   Home: undefined;
   Popular: undefined;
-  TopRated: undefined;
+  Account: undefined;
 };
 
 export type AuthStackParamList = {

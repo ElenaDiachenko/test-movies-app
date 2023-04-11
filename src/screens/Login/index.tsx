@@ -59,8 +59,8 @@ const Login: FC = () => {
           setValue={setPassword}
           secureTextEntry={true}
         />
-        <Button text="Sign Up" onPress={onSubmit} loading={loading} />
-        <LinkAuth title="Don't have an account? Sign In" navigate={navigate} />
+        <Button text="Sign In" onPress={onSubmit} loading={loading} />
+        <LinkAuth title="Don't have an account? Sign Up" navigate={navigate} />
       </View>
     </FormContainer>
   );

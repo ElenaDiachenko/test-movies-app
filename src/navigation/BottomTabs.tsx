@@ -41,7 +41,7 @@ const BottomTabs = () => {
           } else if (route.name === 'Popular') {
             iconName = focused ? 'search-circle' : 'search-circle-outline';
             size = 40;
-          } else if (route.name === 'TopRated') {
+          } else if (route.name === 'Account') {
             iconName = focused ? 'person' : 'person-outline';
           }
 
@@ -86,10 +86,10 @@ const BottomTabs = () => {
       />
 
       <MainTab.Screen
-        name="TopRated"
-        component={Screens.TopRated}
+        name="Account"
+        component={Screens.Account}
         options={{
-          headerTitle: 'TopRated movies',
+          headerTitle: 'User page',
         }}
       />
     </MainTab.Navigator>

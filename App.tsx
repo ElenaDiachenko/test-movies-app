@@ -24,7 +24,7 @@ const App = () => {
     (async () => {
       await setAuthUser();
     })();
-  }, [setAuthUser]);
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>

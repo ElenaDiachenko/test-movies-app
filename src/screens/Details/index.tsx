@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useQuery } from '@tanstack/react-query';
 import { AntDesign } from '@expo/vector-icons';
 import { ScrollView, Image, StyleSheet, Text, ActivityIndicator, View } from 'react-native';
+import { shallow } from 'zustand/shallow';
 
+import { useStore } from 'stores/store';
 import { GenreDataType } from 'types';
 import { DetailsScreenRouteProp, DetailsScreenNavigationProp } from 'navigation/types';
 import { PosterBox, PlayButton, AddButton, Overview, AdultContainer, Rating } from './styles';
 import { Container, Title, ScreenWidth, ScreenHeight, Subtitle } from 'components/shared';
-
 import { API, constants } from 'utils';
 
 const Details = () => {
@@ -20,6 +21,14 @@ const Details = () => {
     queryKey: ['movies', movieId],
     queryFn: () => API.fetchMovieById(movieId),
   });
+
+  const { addMovie, loadingMovies } = useStore(
+    (state) => ({
+      addMovie: state.addSavedMovie,
+      loadingMovies: state.loadingMovies,
+    }),
+    shallow
+  );
 
   if (isLoading)
     return (
@@ -52,8 +61,12 @@ const Details = () => {
           <PlayButton onPress={() => navigation.navigate('PlayVideo', { movieId: data.id })}>
             <AntDesign name="caretright" size={30} color="black" />
           </PlayButton>
-          <AddButton>
-            <AntDesign name="plus" size={30} color="black" />
+          <AddButton onPress={() => addMovie(data.id, data.title, data.poster_path)}>
+            {loadingMovies ? (
+              <ActivityIndicator size={30} color="#000000" />
+            ) : (
+              <AntDesign name="plus" size={30} color="#000000" />
+            )}
           </AddButton>
         </PosterBox>
         <View style={{ paddingHorizontal: 12 }}>
