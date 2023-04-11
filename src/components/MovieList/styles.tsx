@@ -21,6 +21,18 @@ export const TitleBox = styled.View`
   background-color: rgba(0, 0, 0, 0.5);
   padding: 6px;
 `;
+export const RemoveBox = styled.TouchableOpacity`
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  height: 40px;
+  width: 40px;
+  border-radius: 40px;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 export const ItemTitle = styled.Text`
   color: #ffffff;
   font-weight: 400;

@@ -1,11 +1,12 @@
-import React, { memo, useCallback, useEffect } from 'react';
+import React, { memo, useCallback } from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import { shallow } from 'zustand/shallow';
 import { useNavigation } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
 
 import { useStore } from 'stores/store';
 import { HomeScreenNavigationProp } from 'navigation/types';
-import { ListContainer, ListItem, ItemTitle, TitleBox } from './styles';
+import { ListContainer, ListItem, ItemTitle, TitleBox, RemoveBox } from './styles';
 import ListItemSceleton from 'components/ListItemSceleton';
 import { Container, Title } from 'components/shared';
 
@@ -14,19 +15,15 @@ import { SavedMovie } from 'types';
 
 const MovieList = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
-  const { movies, deleteMovie, setMovies, isLoading, error } = useStore(
+  const { movies, deleteMovie, isLoading, error } = useStore(
     (state) => ({
       error: state.errorMovies,
       movies: state.movies,
-      setMovies: state.setSavedMovies,
       isLoading: state.loadingMovies,
       deleteMovie: state.deleteSavedMovie,
     }),
     shallow
   );
-  useEffect(() => {
-    setMovies();
-  }, []);
 
   const renderItem = useCallback(
     ({ item }: { item: SavedMovie }) => (
@@ -42,6 +39,9 @@ const MovieList = () => {
           style={StyleSheet.absoluteFill}
           resizeMode="cover"
         />
+        <RemoveBox onPress={() => deleteMovie(item)}>
+          <Ionicons name="ios-close-outline" size={30} color="white" />
+        </RemoveBox>
         <TitleBox>
           <ItemTitle>{item.title}</ItemTitle>
         </TitleBox>
@@ -59,7 +59,7 @@ const MovieList = () => {
 
   return (
     <View style={{ paddingBottom: 12 }}>
-      {isLoading ? (
+      {isLoading && !movies ? (
         <ListItemSceleton />
       ) : movies.length ? (
         <ListContainer data={movies} numColumns={2} renderItem={renderItem} />
