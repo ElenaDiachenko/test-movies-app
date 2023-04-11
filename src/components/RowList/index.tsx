@@ -63,7 +63,7 @@ const RowList: FC<RowPropsType> = ({ title, fetchData, queryKey }) => {
     );
 
   return (
-    <View style={{ paddingVertical: 12 }}>
+    <View style={{ paddingBottom: 12 }}>
       <Title>{title}</Title>
       {isLoading ? (
         <Sceleton />

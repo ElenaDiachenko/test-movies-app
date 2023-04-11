@@ -1,6 +1,7 @@
 import { StateCreator } from 'zustand';
 import { updateDoc, doc, onSnapshot, arrayUnion, arrayRemove } from 'firebase/firestore';
 import { AuthSlice } from './createAuthSlice';
+import { ThemeSlice } from './createThemeSlice';
 
 import { db } from '../firebase/config';
 import { SavedMovie } from 'types';
@@ -15,7 +16,7 @@ export type MovieSlice = {
 };
 
 export const createMovieSlice: StateCreator<
-  MovieSlice & AuthSlice,
+  MovieSlice & AuthSlice & ThemeSlice,
   [['zustand/immer', never]],
   [],
   MovieSlice

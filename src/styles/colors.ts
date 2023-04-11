@@ -20,4 +20,10 @@ const lightTheme = {
     BUTTON_COLOR: '#000',
   },
 };
+
+export enum ThemeType {
+  light = 'light',
+  dark = 'dark',
+}
+
 export default { lightTheme, darkTheme };

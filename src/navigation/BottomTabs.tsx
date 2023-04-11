@@ -7,10 +7,21 @@ import { Ionicons } from '@expo/vector-icons';
 import { useStore } from 'stores/store';
 import * as Screens from 'screens/index';
 import { HomeTabParamList } from './types';
+import { useTheme } from 'styled-components';
 
 const MainTab = createBottomTabNavigator<HomeTabParamList>();
 
 const BottomTabs = () => {
+  const theme = useTheme();
+
+  const { currentTheme, toggleTheme } = useStore(
+    (state) => ({
+      currentTheme: state.theme,
+      toggleTheme: state.toggleTheme,
+    }),
+    shallow
+  );
+
   const { onLogout } = useStore(
     (state) => ({
       onLogout: state.logoutUser,
@@ -25,15 +36,15 @@ const BottomTabs = () => {
         tabBarShowLabel: false,
         tabBarHideOnKeyboard: true,
         tabBarStyle: {
-          backgroundColor: '#ffffff',
-          shadowColor: '#000000',
+          backgroundColor: theme.colors.BACKGROUND_COLOR,
+          shadowColor: theme.colors.TITLE_COLOR,
           shadowOffset: { width: 0, height: -0.5 },
           shadowOpacity: 0.3,
         },
-        tabBarInactiveTintColor: 'rgba(33, 33, 33, 0.8)',
-        tabBarActiveTintColor: '#3740FE',
+        tabBarInactiveTintColor: theme.colors.TEXT_COLOR,
+        tabBarActiveTintColor: theme.colors.ACCENT_COLOR,
         tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
+          let iconName: keyof typeof Ionicons.glyphMap | undefined;
           size = 25;
 
           if (route.name === 'Home') {
@@ -48,27 +59,31 @@ const BottomTabs = () => {
           return <Ionicons name={iconName} size={size} color={color} />;
         },
         headerStyle: {
-          backgroundColor: '#ffffff',
-          shadowColor: '#000000',
+          backgroundColor: theme.colors.BACKGROUND_COLOR,
+          shadowColor: theme.colors.TITLE_COLOR,
           shadowOffset: { width: 0, height: -0.5 },
           shadowOpacity: 0.3,
         },
         headerTitleAlign: 'center',
         headerTitleStyle: {
-          color: '#212121',
+          color: theme.colors.TITLE_COLOR,
           fontSize: 24,
         },
         headerRight: () => (
-          <TouchableOpacity style={{ width: 24, marginRight: 16 }} onPress={onLogout}>
-            <Feather name="log-out" size={24} color="#73737d" />
+          <TouchableOpacity style={{ width: 40, marginRight: 16 }} onPress={onLogout}>
+            <Feather name="log-out" size={26} color={theme.colors.SECONDARY_COLOR} />
           </TouchableOpacity>
         ),
-        // headerLeft: () => (
-        //   <TouchableOpacity style={{ width: 24, marginRight: 16 }} onPress={() => {}}>
-        //     <Feather name="log-out" size={24} color="#a31d1d" />
-        //   </TouchableOpacity>
-        // ),
-        headerPressColor: '#3740FE',
+        headerLeft: () => (
+          <TouchableOpacity style={{ width: 40, marginLeft: 16 }} onPress={toggleTheme}>
+            <Ionicons
+              name={currentTheme === 'light' ? 'ios-sunny-outline' : 'ios-moon'}
+              size={30}
+              color={theme.colors.SECONDARY_COLOR}
+            />
+          </TouchableOpacity>
+        ),
+        headerPressColor: theme.colors.ACCENT_COLOR,
       })}>
       <MainTab.Screen
         name="Home"

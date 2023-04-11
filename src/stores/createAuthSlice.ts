@@ -14,6 +14,7 @@ import { RegisterCredentials } from 'screens/Register';
 
 import { LoginCredentials } from 'screens/Login';
 import { MovieSlice } from './createMovieSlice';
+import { ThemeSlice } from './createThemeSlice';
 
 export type AuthSlice = {
   authUser: User | null;
@@ -26,8 +27,8 @@ export type AuthSlice = {
 };
 
 export const createAuthSlice: StateCreator<
-  AuthSlice & MovieSlice,
-  [['zustand/immer', never]],
+  AuthSlice & MovieSlice & ThemeSlice,
+  [['zustand/immer', never], ['zustand/persist', unknown]],
   [],
   AuthSlice
 > = (set) => ({
@@ -38,7 +39,6 @@ export const createAuthSlice: StateCreator<
     set({ loading: true });
     try {
       await onAuthStateChanged(auth, (currentUser) => {
-        console.log(currentUser, 'currentUser');
         if (currentUser?.email) {
           set({
             authUser: { email: currentUser.email },
