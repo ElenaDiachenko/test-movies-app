@@ -14,7 +14,7 @@ export type MovieItemType = {
   original_language: string;
   original_title: string;
   overview: string;
-  poster_path: string;
+  poster_path: string | null;
   media_type?: string;
   genres: GenreDataType[];
   genre_ids: number[];
@@ -56,7 +56,7 @@ export type User = {
 export type SavedMovie = {
   id: number;
   title: string;
-  poster_path: string;
+  poster_path: string | null;
 };
 
 export type TransformedMoviesType = {

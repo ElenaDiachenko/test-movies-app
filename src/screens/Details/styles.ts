@@ -33,22 +33,14 @@ export const Overview = styled.Text`
   `}
 `;
 
-export const AdultContainer = styled.View`
+export const Rating = styled.Text`
   ${({ theme }) => css`
     color: black;
     background-color: ${theme.colors.ACCENT_COLOR};
-    display: flex;
-    justify-content: center;
-    align-items: center;
     margin-left: auto;
-    padding: 0.5px 3px;
+    padding: 1px 6px;
     border-radius: 2px;
-  `}
-`;
-
-export const Rating = styled.Text`
-  ${({ theme }) => css`
-    color: #1080e9;
-    font-weight: bold;
+    font-weight: 700;
+    color: #ffffff;
   `}
 `;

@@ -4,14 +4,14 @@ import { AuthSlice } from './createAuthSlice';
 import { ThemeSlice } from './createThemeSlice';
 
 import { db } from '../firebase/config';
-import { SavedMovie } from 'types';
+import { SavedMovie } from 'types/index';
 
 export type MovieSlice = {
   movies: SavedMovie[] | [];
   loadingMovies: boolean;
   errorMovies: string | null;
   setSavedMovies: () => void;
-  addSavedMovie: (id: number, title: string, poster_path: string) => void;
+  addSavedMovie: (id: number, title: string, poster_path: string | null) => void;
   deleteSavedMovie: (movie: SavedMovie) => void;
 };
 

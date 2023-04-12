@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
 import { AntDesign } from '@expo/vector-icons';
-import { ScrollView, Image, StyleSheet, Text, ActivityIndicator, View } from 'react-native';
+import { ScrollView, Image, StyleSheet, ActivityIndicator, View } from 'react-native';
 import { shallow } from 'zustand/shallow';
 import { useTheme } from 'styled-components';
 
 import { useStore } from 'stores/store';
 import { GenreDataType } from 'types/index';
 import { DetailsScreenRouteProp, DetailsScreenNavigationProp } from 'navigation/types';
-import { PosterBox, PlayButton, AddButton, Overview, AdultContainer, Rating } from './styles';
+import { PosterBox, PlayButton, AddButton, Overview, Rating } from './styles';
+
 import { Container, Title, ScreenWidth, ScreenHeight, Subtitle } from 'components/shared';
 import { API, constants } from 'utils/index';
+import { RowList } from 'components/index';
 
 const Details = () => {
   const route = useRoute<DetailsScreenRouteProp>();
@@ -76,17 +78,13 @@ const Details = () => {
                 )}
               </AddButton>
             </PosterBox>
-            <View style={{ paddingHorizontal: 12 }}>
+            <View style={{ paddingHorizontal: 12, paddingBottom: 12 }}>
               <View style={{ flexDirection: 'row', marginBottom: 6 }}>
                 <Rating>
                   {data.vote_average
                     ? (data.vote_average * 10).toFixed(0).toString().split('').join('.')
                     : 0}
                 </Rating>
-
-                <AdultContainer>
-                  <Text style={{ fontWeight: '700' }}>{data.adult ? '18+' : '12+'}</Text>
-                </AdultContainer>
               </View>
               <View style={{ flexDirection: 'row' }}>
                 <Title>{data.title}</Title>
@@ -99,6 +97,15 @@ const Details = () => {
               <Overview style={{ marginTop: 12 }}>{data.overview}</Overview>
             </View>
           </>
+        )}
+
+        {data && movieId && (
+          <RowList
+            title={'Recommendations'}
+            fetchData={API.fetchRecommendation}
+            queryKey={`recommendations , ${movieId}`}
+            movieId={data.id}
+          />
         )}
       </ScrollView>
     </Container>

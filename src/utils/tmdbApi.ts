@@ -17,7 +17,7 @@ export const fetchTrending = async (page: number): Promise<TransformedMoviesType
 
 export const fetchTopRated = async (page: number): Promise<TransformedMoviesType> => {
   return $api
-    .get<MoviesDataType>(`movie/top_rated?api_key=${TMDB_API_KEY}&language=en-US&page=${page}`)
+    .get<MoviesDataType>(`/movie/top_rated?api_key=${TMDB_API_KEY}&language=en-US&page=${page}`)
     .then((res) => {
       const hasNext = page < res.data.total_pages;
       return {
@@ -30,7 +30,7 @@ export const fetchTopRated = async (page: number): Promise<TransformedMoviesType
 
 export const fetchPopular = async (page: number): Promise<TransformedMoviesType> => {
   return $api
-    .get<MoviesDataType>(`movie/popular?api_key=${TMDB_API_KEY}&language=en-US&page=${page}`)
+    .get<MoviesDataType>(`/movie/popular?api_key=${TMDB_API_KEY}&language=en-US&page=${page}`)
     .then((res) => {
       const hasNext = page < res.data.total_pages;
       return {
@@ -43,12 +43,13 @@ export const fetchPopular = async (page: number): Promise<TransformedMoviesType>
 
 export const fetchMovieById = async (movieId: number): Promise<MovieItemType> => {
   return $api
-    .get<MovieItemType>(`movie/${movieId}?api_key=${TMDB_API_KEY}&language=en-US`)
+    .get<MovieItemType>(`/movie/${movieId}?api_key=${TMDB_API_KEY}&language=en-US`)
     .then((res) => res.data);
 };
+
 export const fetchVideo = async (movieId: number): Promise<VideoDataType> => {
   return $api
-    .get<VideoDataType>(`movie/${movieId}/videos?api_key=${TMDB_API_KEY}&language=en-US`)
+    .get<VideoDataType>(`/movie/${movieId}/videos?api_key=${TMDB_API_KEY}&language=en-US`)
     .then((res) => res.data);
 };
 
@@ -58,7 +59,25 @@ export const fetchMovieByKeyword = async (
 ): Promise<TransformedMoviesType> => {
   return $api
     .get<MoviesDataType>(
-      `search/movie?api_key=${TMDB_API_KEY}&query=${query}&language=en-US&page=${page}`
+      `/search/movie?api_key=${TMDB_API_KEY}&query=${query}&language=en-US&page=${page}`
+    )
+    .then((res) => {
+      const hasNext = page < res.data.total_pages;
+      return {
+        nextPage: hasNext ? page + 1 : undefined,
+        prevPage: page > 1 ? page - 1 : undefined,
+        movies: res.data.results,
+      };
+    });
+};
+
+export const fetchRecommendation = async (
+  page: number,
+  movieId?: number
+): Promise<TransformedMoviesType> => {
+  return $api
+    .get<MoviesDataType>(
+      `/movie/${movieId}/recommendations?api_key=${TMDB_API_KEY}&language=en-US&page=${page}`
     )
     .then((res) => {
       const hasNext = page < res.data.total_pages;

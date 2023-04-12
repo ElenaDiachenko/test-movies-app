@@ -8,23 +8,24 @@ import { RowContainer, RowItem, RowItemTitle, RowItemTitleBox } from './styles';
 import { TransformedMoviesType } from 'types/index';
 import { HomeScreenNavigationProp } from 'navigation/types';
 import { Title, Container } from 'components/shared';
-import { Sceleton } from 'components/index';
+import Sceleton from '../Sceleton';
 import { constants } from 'utils/index';
 
 type RowPropsType = {
   title: string;
-  fetchData: (page: number) => Promise<TransformedMoviesType>;
+  fetchData: (page: number, movieId?: number) => Promise<TransformedMoviesType>;
   queryKey: string;
+  movieId?: number;
 };
 
-const RowList: FC<RowPropsType> = ({ title, fetchData, queryKey }) => {
+const RowList: FC<RowPropsType> = ({ title, fetchData, queryKey, movieId }) => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
   const theme = useTheme();
   const { data, isLoading, error, isFetchingNextPage, hasNextPage, fetchNextPage } =
     useInfiniteQuery<TransformedMoviesType>({
       queryKey: [`${queryKey}`],
       getNextPageParam: (prevData) => prevData.nextPage,
-      queryFn: ({ pageParam = 1 }) => fetchData(pageParam),
+      queryFn: ({ pageParam = 1 }) => fetchData(pageParam, movieId),
     });
 
   const loadMore = () => {
@@ -64,28 +65,31 @@ const RowList: FC<RowPropsType> = ({ title, fetchData, queryKey }) => {
 
   return (
     <View style={{ paddingBottom: 12 }}>
-      <Title>{title}</Title>
       {isLoading ? (
         <Sceleton />
-      ) : data ? (
-        <RowContainer
-          horizontal
-          data={data.pages.map((page) => page.movies).flat()}
-          showsHorizontalScrollIndicator={false}
-          onEndReached={loadMore}
-          onEndReachedThreshold={0.5}
-          ListFooterComponent={
-            isFetchingNextPage ? (
-              <ActivityIndicator
-                size={30}
-                color={theme.colors.ACCENT_COLOR}
-                style={{ height: 220, alignSelf: 'center', marginLeft: 6 }}
-              />
-            ) : null
-          }
-          ItemSeparatorComponent={() => <View style={{ width: 12 }} />}
-          renderItem={renderItem}
-        />
+      ) : data?.pages[0].movies.length ? (
+        <>
+          <Title>{title}</Title>
+          <RowContainer
+            horizontal
+            data={data.pages.map((page) => page.movies).flat()}
+            keyExtractor={(item, index) => index.toString()}
+            showsHorizontalScrollIndicator={false}
+            onEndReached={loadMore}
+            onEndReachedThreshold={0.5}
+            ListFooterComponent={
+              isFetchingNextPage ? (
+                <ActivityIndicator
+                  size={30}
+                  color={theme.colors.ACCENT_COLOR}
+                  style={{ height: 220, alignSelf: 'center', marginLeft: 6 }}
+                />
+              ) : null
+            }
+            ItemSeparatorComponent={() => <View style={{ width: 12 }} />}
+            renderItem={renderItem}
+          />
+        </>
       ) : null}
     </View>
   );
