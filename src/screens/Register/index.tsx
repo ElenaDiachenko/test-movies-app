@@ -7,9 +7,7 @@ import { AuthScreenNavigationProp } from 'navigation/types';
 import { useStore } from 'stores/store';
 import { RegisterTitle } from './styles';
 import { FormContainer } from 'components/shared';
-import { Input } from 'components/Input';
-import { Button } from 'components/Button';
-import { LinkAuth } from 'components/LinkAuth';
+import { Input, Button, LinkAuth } from 'components/index';
 
 export type RegisterCredentials = {
   name: string;

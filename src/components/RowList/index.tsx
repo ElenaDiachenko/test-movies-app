@@ -2,14 +2,14 @@ import React, { FC, memo, useCallback } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { View, Image, StyleSheet, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useTheme } from 'styled-components';
 
 import { RowContainer, RowItem, RowItemTitle, RowItemTitleBox } from './styles';
-import { MovieItemType, TransformedMoviesType } from 'types';
+import { TransformedMoviesType } from 'types/index';
 import { HomeScreenNavigationProp } from 'navigation/types';
 import { Title, Container } from 'components/shared';
-import Sceleton from 'components/Sceleton';
-
-import { constants } from 'utils';
+import { Sceleton } from 'components/index';
+import { constants } from 'utils/index';
 
 type RowPropsType = {
   title: string;
@@ -19,7 +19,7 @@ type RowPropsType = {
 
 const RowList: FC<RowPropsType> = ({ title, fetchData, queryKey }) => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
-
+  const theme = useTheme();
   const { data, isLoading, error, isFetchingNextPage, hasNextPage, fetchNextPage } =
     useInfiniteQuery<TransformedMoviesType>({
       queryKey: [`${queryKey}`],
@@ -34,7 +34,7 @@ const RowList: FC<RowPropsType> = ({ title, fetchData, queryKey }) => {
   };
 
   const renderItem = useCallback(
-    ({ item }: { item: MovieItemType }) => (
+    ({ item }: any) => (
       <RowItem
         onPress={() => navigation.navigate('Details', { movieId: item.id })}
         style={{
@@ -78,6 +78,7 @@ const RowList: FC<RowPropsType> = ({ title, fetchData, queryKey }) => {
             isFetchingNextPage ? (
               <ActivityIndicator
                 size={30}
+                color={theme.colors.ACCENT_COLOR}
                 style={{ height: 220, alignSelf: 'center', marginLeft: 6 }}
               />
             ) : null

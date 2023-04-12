@@ -6,7 +6,7 @@ import { useTheme } from 'styled-components';
 
 import { HomeScreenNavigationProp } from 'navigation/types';
 import { ListContainer, ListItem, ItemTitle, TitleBox, RemoveBox } from './styles';
-import ListItemSceleton from 'components/ListItemSceleton';
+import ListItemSceleton from '../ListItemSceleton';
 import { Container, Title } from 'components/shared';
 import { constants } from 'utils/index';
 import { SavedMovie, MovieItemType } from 'types/index';

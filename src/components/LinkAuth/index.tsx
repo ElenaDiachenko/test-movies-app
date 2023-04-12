@@ -7,10 +7,12 @@ type LinkAuthProps = {
   navigate: () => void;
 };
 
-export const LinkAuth: FC<LinkAuthProps> = ({ navigate, title }) => {
+const LinkAuth: FC<LinkAuthProps> = ({ navigate, title }) => {
   return (
     <LinkBox activeOpacity={0.8} onPress={navigate}>
       <StyledText>{title}</StyledText>
     </LinkBox>
   );
 };
+
+export default LinkAuth;

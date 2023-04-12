@@ -46,7 +46,7 @@ export const fetchMovieById = async (movieId: number): Promise<MovieItemType> =>
     .get<MovieItemType>(`movie/${movieId}?api_key=${TMDB_API_KEY}&language=en-US`)
     .then((res) => res.data);
 };
-export const fetchVideo = async (movieId: string): Promise<VideoDataType> => {
+export const fetchVideo = async (movieId: number): Promise<VideoDataType> => {
   return $api
     .get<VideoDataType>(`movie/${movieId}/videos?api_key=${TMDB_API_KEY}&language=en-US`)
     .then((res) => res.data);

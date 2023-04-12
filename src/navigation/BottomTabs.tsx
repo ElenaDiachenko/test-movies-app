@@ -88,7 +88,7 @@ const BottomTabs = () => {
       <MainTab.Screen name="Home" component={Screens.Home} />
       <MainTab.Screen
         name="Search"
-        component={Screens.Popular}
+        component={Screens.Search}
         options={{ headerTitle: 'Search' }}
       />
 

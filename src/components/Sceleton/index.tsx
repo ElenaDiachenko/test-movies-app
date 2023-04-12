@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { useTheme } from 'styled-components';
-import { constants } from 'utils';
+import { constants } from 'utils/index';
 import { RowContainer } from 'components/RowList/styles';
 
 const Sceleton = () => {

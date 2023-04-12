@@ -8,7 +8,7 @@ type ButtonProps = {
   onPress: () => void;
 };
 
-export const Button: FC<ButtonProps> = ({ text, onPress, loading }) => {
+const Button: FC<ButtonProps> = ({ text, onPress, loading }) => {
   return (
     <StyledBtn activeOpacity={0.8} height={'50px'} radius={'50px'} width={'90%'} onPress={onPress}>
       {loading ? (
@@ -19,3 +19,5 @@ export const Button: FC<ButtonProps> = ({ text, onPress, loading }) => {
     </StyledBtn>
   );
 };
+
+export default Button;

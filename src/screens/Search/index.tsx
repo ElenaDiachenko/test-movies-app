@@ -7,11 +7,10 @@ import { MovieItemType, TransformedMoviesType } from 'types/index';
 import { Container } from 'components/shared';
 import { InnerContainer, SearchBox } from './styles';
 import { API } from 'utils/index';
-import VerticalList from 'components/VerticalList';
-import { Input } from 'components/Input';
+import { VerticalList, Input } from 'components/index';
 import { useDebounce } from '../../hooks/index';
 
-const Popular: FC = () => {
+const Search: FC = () => {
   const theme = useTheme();
   const [query, setQuery] = useState('');
   const [renderData, setRenderData] = useState<MovieItemType[] | []>([]);
@@ -60,4 +59,4 @@ const Popular: FC = () => {
   );
 };
 
-export default Popular;
+export default Search;

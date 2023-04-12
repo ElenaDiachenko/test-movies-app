@@ -7,12 +7,8 @@ type InputProps = {
   value: string;
   setValue: Dispatch<SetStateAction<string>> | ((value: string) => void);
 };
-export const Input: FC<InputProps> = ({
-  placeholder,
-  secureTextEntry = false,
-  value,
-  setValue,
-}) => {
+
+const Input: FC<InputProps> = ({ placeholder, secureTextEntry = false, value, setValue }) => {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
@@ -28,3 +24,5 @@ export const Input: FC<InputProps> = ({
     />
   );
 };
+
+export default Input;

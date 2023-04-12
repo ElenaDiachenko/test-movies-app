@@ -45,7 +45,7 @@ export interface VideoDataItemType {
   type: string;
   official: boolean;
   published_at: string;
-  id: string;
+  id: number | string;
 }
 
 export type User = {

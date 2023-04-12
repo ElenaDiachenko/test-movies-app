@@ -1,20 +1,21 @@
 import React, { FC, useState } from 'react';
 import { useRoute } from '@react-navigation/native';
 import { useQuery } from '@tanstack/react-query';
-import { ScrollView, View, ActivityIndicator } from 'react-native';
+import { ScrollView, ActivityIndicator } from 'react-native';
+import { useTheme } from 'styled-components';
 
-import Player from 'components/Player';
+import { Player } from 'components/index';
 import { Container, Title, ScreenHeight, ScreenWidth } from 'components/shared';
 import { PlayerScreenRouteProp } from 'navigation/types';
-import { VideoDataType, VideoDataItemType } from 'types';
-import { API } from 'utils';
+import { VideoDataType, VideoDataItemType } from 'types/index';
+import { API } from 'utils/index';
 
 const PlayVideo: FC = () => {
   const route = useRoute<PlayerScreenRouteProp>();
-
+  const theme = useTheme();
   const { movieId } = route.params;
 
-  const { data, isLoading, error } = useQuery<VideoDataType | Error>({
+  const { data, isLoading, error } = useQuery<VideoDataType>({
     queryKey: ['videos', movieId],
     queryFn: () => API.fetchVideo(movieId),
   });
@@ -24,7 +25,10 @@ const PlayVideo: FC = () => {
   if (isLoading)
     return (
       <Container>
-        <ActivityIndicator size={ScreenHeight > ScreenWidth ? ScreenWidth / 6 : ScreenHeight / 6} />
+        <ActivityIndicator
+          color={theme.colors.ACCENT_COLOR}
+          size={ScreenHeight > ScreenWidth ? ScreenWidth / 6 : ScreenHeight / 6}
+        />
       </Container>
     );
   if (error)
@@ -36,7 +40,7 @@ const PlayVideo: FC = () => {
 
   return (
     <Container>
-      {data.results.length ? (
+      {data?.results?.length ? (
         <ScrollView>
           {data.results.map((video: VideoDataItemType) => (
             <Player
