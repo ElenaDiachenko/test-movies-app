@@ -21,7 +21,7 @@ export type DetailsScreenNavigationProp = NativeStackNavigationProp<
 >;
 export type HomeTabParamList = {
   Home: undefined;
-  Popular: undefined;
+  Search: undefined;
   Account: undefined;
 };
 

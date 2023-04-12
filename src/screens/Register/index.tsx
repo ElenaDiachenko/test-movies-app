@@ -23,7 +23,6 @@ const Register: FC = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // const [loading, setLoading] = useState(false);
 
   const { register, loading, error } = useStore(
     (state) => ({

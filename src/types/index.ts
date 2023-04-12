@@ -58,3 +58,9 @@ export type SavedMovie = {
   title: string;
   poster_path: string;
 };
+
+export type TransformedMoviesType = {
+  nextPage: number | undefined;
+  prevPage: number | undefined;
+  movies: MovieItemType[];
+};

@@ -1,21 +1,21 @@
 import React, { memo, useCallback, FC } from 'react';
 import { View, Image, StyleSheet, ActivityIndicator } from 'react-native';
-import { shallow } from 'zustand/shallow';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
+import { useTheme } from 'styled-components';
 
 import { HomeScreenNavigationProp } from 'navigation/types';
 import { ListContainer, ListItem, ItemTitle, TitleBox, RemoveBox } from './styles';
 import ListItemSceleton from 'components/ListItemSceleton';
 import { Container, Title } from 'components/shared';
-import { constants } from 'utils';
-import { SavedMovie, MovieItemType } from 'types';
+import { constants } from 'utils/index';
+import { SavedMovie, MovieItemType } from 'types/index';
 
 type VerticalListProps = {
-  movies: MovieItemType | SavedMovie;
+  movies: MovieItemType[] | SavedMovie[];
   isLoading: boolean;
   error: unknown;
-  deleteMovie?: (movie: MovieItemType | SavedMovie) => void;
+  deleteMovie?: (movie: SavedMovie) => void;
   numColumns?: number;
   onEndReached?: () => void;
   onEndReachedThreshold?: number;
@@ -36,8 +36,10 @@ const VerticalList: FC<VerticalListProps> = ({
 }) => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
 
+  const theme = useTheme();
+
   const renderItem = useCallback(
-    ({ item }: { item: SavedMovie }) => (
+    ({ item }: any) => (
       <ListItem
         onPress={() => navigation.navigate('Details', { movieId: item.id })}
         style={{
@@ -72,7 +74,7 @@ const VerticalList: FC<VerticalListProps> = ({
 
   return (
     <View style={{ paddingBottom: 12 }}>
-      {isLoading && !movies ? (
+      {isLoading && !movies.length ? (
         <ListItemSceleton />
       ) : movies.length ? (
         <ListContainer
@@ -85,6 +87,7 @@ const VerticalList: FC<VerticalListProps> = ({
             isFetchingNextPage ? (
               <ActivityIndicator
                 size={30}
+                color={theme.colors.ACCENT_COLOR}
                 style={{ height: 220, alignSelf: 'center', marginLeft: 6 }}
               />
             ) : null

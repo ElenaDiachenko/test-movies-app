@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { constants } from 'utils';
-import { ListContainer } from 'components/MovieList/styles';
+import { ListContainer } from 'components/VerticalList/styles';
 import { useTheme } from 'styled-components';
 
 const ListItemSceleton = () => {

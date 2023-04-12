@@ -23,29 +23,11 @@ module.exports = function (api) {
             utils: './src/utils',
             styles: './src/styles',
             types: './src/types',
+            hooks: './src/hooks',
             src: './src',
           },
-          // extensions: ['.js', '.jsx', '.ts', '.tsx'],
         },
       ],
     ],
-    // plugins: [
-    //   [
-    //     'module-resolver',
-    //     {
-    //       alias: {
-    //         navigation: './src/navigation',
-    //         components: './src/components',
-    //         screens: './src/screens',
-    //         stores: './src/stores',
-    //         utils: './src/utils',
-    //         styles: './src/styles',
-    //         types: './src/types',
-    //         src: './src',
-    //       },
-    //       extensions: ['.js', '.jsx', '.ts', '.tsx'],
-    //     },
-    //   ],
-    // ],
   };
 };

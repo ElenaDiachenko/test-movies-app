@@ -49,7 +49,7 @@ const BottomTabs = () => {
 
           if (route.name === 'Home') {
             iconName = focused ? 'home' : 'home-outline';
-          } else if (route.name === 'Popular') {
+          } else if (route.name === 'Search') {
             iconName = focused ? 'search-circle' : 'search-circle-outline';
             size = 40;
           } else if (route.name === 'Account') {
@@ -85,19 +85,11 @@ const BottomTabs = () => {
         ),
         headerPressColor: theme.colors.ACCENT_COLOR,
       })}>
+      <MainTab.Screen name="Home" component={Screens.Home} />
       <MainTab.Screen
-        name="Home"
-        component={Screens.Home}
-        options={
-          {
-            //   headerShown: false,
-          }
-        }
-      />
-      <MainTab.Screen
-        name="Popular"
+        name="Search"
         component={Screens.Popular}
-        options={{ headerTitle: 'Popular movies' }}
+        options={{ headerTitle: 'Search' }}
       />
 
       <MainTab.Screen

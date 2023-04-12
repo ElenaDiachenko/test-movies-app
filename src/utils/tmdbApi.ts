@@ -1,12 +1,6 @@
 import $api from './instanceTMDB';
-import { MoviesDataType, MovieItemType, VideoDataType } from 'types';
+import { MoviesDataType, MovieItemType, VideoDataType, TransformedMoviesType } from 'types/index';
 import { TMDB_API_KEY } from '@env';
-
-type TransformedMoviesType = {
-  nextPage: number | undefined;
-  prevPage: number | undefined;
-  movies: MovieItemType[];
-};
 
 export const fetchTrending = async (page: number): Promise<TransformedMoviesType> => {
   return $api
