@@ -1,24 +1,45 @@
-import React, { FC } from 'react';
-import { Pressable } from 'react-native';
-import { Container, Title } from 'components/shared';
-import { useNavigation } from '@react-navigation/native';
-import { HomeScreenNavigationProp } from 'navigation/types';
+import React, { FC, useState, useEffect } from 'react';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
-const movie = {
-  id: 1,
-  title: ' First movie title',
-};
+import { MovieItemType, TransformedMoviesType } from 'types';
+import { Container } from 'components/shared';
+import { API } from 'utils';
+import VerticalList from 'components/VerticalList';
 
 const Popular: FC = () => {
-  const navigation = useNavigation<HomeScreenNavigationProp>();
+  const [query, setQuery] = useState('sunny');
+  const [renderData, setRenderData] = useState<MovieItemType[] | []>([]);
+
+  const { data, isLoading, error, isFetchingNextPage, hasNextPage, fetchNextPage } =
+    useInfiniteQuery<TransformedMoviesType>({
+      queryKey: ['movies', `${query}`],
+      getNextPageParam: (prevData) => prevData.nextPage,
+      queryFn: ({ pageParam = 1 }) => API.fetchMovieByKeyword(pageParam, query),
+    });
+
+  const loadMore = () => {
+    if (hasNextPage) {
+      fetchNextPage();
+    }
+  };
+
+  useEffect(() => {
+    if (!data) return;
+    setRenderData(data.pages.map((page) => page.movies).flat());
+  }, [data]);
+
   return (
     <Container>
-      <Title>Popular</Title>
-      <Pressable
-        style={{ height: 20 }}
-        onPress={() => navigation.navigate('Details', { movieId: movie.id })}>
-        <Title> From popular</Title>
-      </Pressable>
+      <VerticalList
+        movies={renderData}
+        isLoading={isLoading}
+        error={error}
+        numColumns={2}
+        onEndReached={loadMore}
+        onEndReachedThreshold={0.5}
+        isFetchingNextPage={isFetchingNextPage}
+        notFoundMessage={`Not found movies by keyword ${query}`}
+      />
     </Container>
   );
 };
