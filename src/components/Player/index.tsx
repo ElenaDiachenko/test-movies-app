@@ -1,6 +1,7 @@
 import React, { FC, useState, useCallback, memo, Dispatch, SetStateAction } from 'react';
 import { View } from 'react-native';
 import YoutubeIframe from 'react-native-youtube-iframe';
+import { useTheme } from 'styled-components';
 
 import { ScreenWidth } from 'components/shared';
 
@@ -12,6 +13,7 @@ type PlayerProps = {
 
 const Player: FC<PlayerProps> = ({ videoId, currentVideo, setCurrentVideo }) => {
   const [playing, setPlaying] = useState<boolean>(false);
+  const theme = useTheme();
 
   const onStateChanged = useCallback((state: string): void => {
     if (state === 'ended' || currentVideo !== videoId) {
@@ -33,6 +35,7 @@ const Player: FC<PlayerProps> = ({ videoId, currentVideo, setCurrentVideo }) => 
           width: ScreenWidth,
           aspectRatio: 16 / 9,
           marginVertical: 12,
+          backgroundColor: theme.colors.SECONDARY_COLOR,
         }}>
         <View>
           <YoutubeIframe

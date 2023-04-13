@@ -27,7 +27,7 @@ export const AddButton = styled(Button)`
 `;
 export const Overview = styled.Text`
   ${({ theme }) => css`
-    color: ${theme.colors.TEXT_COLOR};
+    color: ${theme.colors.SECONDARY_COLOR};
     font-weight: 400;
     font-size: 16px;
   `}

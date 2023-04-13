@@ -41,7 +41,7 @@ const BottomTabs = () => {
           shadowOffset: { width: 0, height: -0.5 },
           shadowOpacity: 0.3,
         },
-        tabBarInactiveTintColor: theme.colors.TEXT_COLOR,
+        tabBarInactiveTintColor: theme.colors.SECONDARY_COLOR,
         tabBarActiveTintColor: theme.colors.ACCENT_COLOR,
 
         tabBarIcon: ({ focused, color, size }) => {

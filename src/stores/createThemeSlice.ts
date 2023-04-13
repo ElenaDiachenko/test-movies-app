@@ -15,7 +15,7 @@ export const createThemeSlice: StateCreator<
   [],
   ThemeSlice
 > = (set, get) => ({
-  theme: ThemeType.light,
+  theme: ThemeType.dark,
 
   setTheme: () => {
     const { theme } = get();

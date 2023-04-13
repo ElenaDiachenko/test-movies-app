@@ -27,16 +27,14 @@ const Details = () => {
     queryFn: () => API.fetchMovieById(movieId),
   });
 
-  const { addMovie, loadingMovies, errorMovies } = useStore(
+  const { addMovie, loadingMovies } = useStore(
     (state) => ({
       addMovie: state.addSavedMovie,
       loadingMovies: state.loadingMovies,
-      errorMovies: state.errorMovies,
     }),
     shallow
   );
 
-  console.log(errorMovies, 'errorMovies detaile');
   if (isLoading)
     return (
       <Container>
