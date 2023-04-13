@@ -10,6 +10,7 @@ import ListItemSceleton from '../ListItemSceleton';
 import { Container, Title } from 'components/shared';
 import { constants } from 'utils/index';
 import { SavedMovie, MovieItemType } from 'types/index';
+const fakePoster = require('../../../assets/images/fake-poster.jpg');
 
 type VerticalListProps = {
   movies: MovieItemType[] | SavedMovie[];
@@ -46,9 +47,13 @@ const VerticalList: FC<VerticalListProps> = ({
           aspectRatio: constants.ASPECT_RATIO,
         }}>
         <Image
-          source={{
-            uri: `${constants.TMDB_IMAGE_URL}${item.poster_path}`,
-          }}
+          source={
+            item.poster_path
+              ? {
+                  uri: `${constants.TMDB_IMAGE_URL}${item.poster_path}`,
+                }
+              : fakePoster
+          }
           style={StyleSheet.absoluteFill}
           resizeMode="cover"
         />

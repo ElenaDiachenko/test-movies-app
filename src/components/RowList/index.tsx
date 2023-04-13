@@ -10,6 +10,7 @@ import { HomeScreenNavigationProp } from 'navigation/types';
 import { Title, Container } from 'components/shared';
 import Sceleton from '../Sceleton';
 import { constants } from 'utils/index';
+const fakePoster = require('../../../assets/images/fake-poster.jpg');
 
 type RowPropsType = {
   title: string;
@@ -42,9 +43,13 @@ const RowList: FC<RowPropsType> = ({ title, fetchData, queryKey, movieId }) => {
           aspectRatio: constants.ASPECT_RATIO,
         }}>
         <Image
-          source={{
-            uri: `${constants.TMDB_IMAGE_URL}${item.poster_path}`,
-          }}
+          source={
+            item.poster_path
+              ? {
+                  uri: `${constants.TMDB_IMAGE_URL}${item.poster_path}`,
+                }
+              : fakePoster
+          }
           style={StyleSheet.absoluteFill}
           resizeMode="cover"
         />

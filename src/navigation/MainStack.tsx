@@ -1,18 +1,10 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useTheme } from 'styled-components';
 
 import * as Screens from 'screens/index';
-
 import { HomeStackNavigatorParamList } from './types';
-
 import BottomTabs from './BottomTabs';
-import { useTheme } from 'styled-components';
-import { useNavigationState } from '@react-navigation/native';
 
-function usePreviousRouteName() {
-  return useNavigationState((state) =>
-    state.routes[state.index - 1]?.name ? state.routes[state.index - 1].name : 'None'
-  );
-}
 const Stack = createNativeStackNavigator<HomeStackNavigatorParamList>();
 
 const MainStack = () => {

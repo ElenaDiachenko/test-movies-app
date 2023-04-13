@@ -14,6 +14,7 @@ import { PosterBox, PlayButton, AddButton, Overview, Rating } from './styles';
 import { Container, Title, ScreenWidth, ScreenHeight, Subtitle } from 'components/shared';
 import { API, constants } from 'utils/index';
 import { RowList } from 'components/index';
+const fakePoster = require('../../../assets/images/fake-poster-details.jpg');
 
 const Details = () => {
   const route = useRoute<DetailsScreenRouteProp>();
@@ -62,9 +63,13 @@ const Details = () => {
                 aspectRatio: constants.ASPECT_RATIO,
               }}>
               <Image
-                source={{
-                  uri: `${constants.TMDB_IMAGE_URL}/${data.poster_path}`,
-                }}
+                source={
+                  data.poster_path
+                    ? {
+                        uri: `${constants.TMDB_IMAGE_URL}${data.poster_path}`,
+                      }
+                    : fakePoster
+                }
                 resizeMode="cover"
                 style={StyleSheet.absoluteFill}
               />
