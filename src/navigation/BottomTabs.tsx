@@ -43,6 +43,7 @@ const BottomTabs = () => {
         },
         tabBarInactiveTintColor: theme.colors.TEXT_COLOR,
         tabBarActiveTintColor: theme.colors.ACCENT_COLOR,
+
         tabBarIcon: ({ focused, color, size }) => {
           let iconName: keyof typeof Ionicons.glyphMap | undefined;
           size = 25;
