@@ -2,7 +2,7 @@ import { StateCreator } from 'zustand';
 import { updateDoc, doc, onSnapshot, arrayUnion, arrayRemove } from 'firebase/firestore';
 import { AuthSlice } from './createAuthSlice';
 import { ThemeSlice } from './createThemeSlice';
-
+import { Alert } from 'react-native';
 import { db } from '../firebase/config';
 import { SavedMovie } from 'types/index';
 
@@ -45,24 +45,35 @@ export const createMovieSlice: StateCreator<
     set({ loadingMovies: true });
     try {
       const { authUser, movies } = get();
-      const movieID = doc(db, 'users', `${authUser?.email}`);
+      const duplicate = movies.find((movie) => movie.id === id);
+      if (duplicate) {
+        set({
+          movies: [...movies],
+          loadingMovies: false,
+          errorMovies: null,
+        });
+        Alert.alert(' This movie is already saved');
+      } else {
+        const movieID = doc(db, 'users', `${authUser?.email}`);
 
-      await updateDoc(movieID, {
-        savedMovies: arrayUnion({
-          id,
-          title,
-          poster_path,
-        }),
-      });
+        await updateDoc(movieID, {
+          savedMovies: arrayUnion({
+            id,
+            title,
+            poster_path,
+          }),
+        });
 
-      set({
-        movies: [...movies, { id, title, poster_path }],
-        loadingMovies: false,
-        errorMovies: null,
-      });
+        set({
+          movies: [...movies, { id, title, poster_path }],
+          loadingMovies: false,
+          errorMovies: null,
+        });
+        Alert.alert(' Movie have been saved');
+      }
     } catch (errorMovies: any) {
       set({ errorMovies: errorMovies.message, loadingMovies: false });
-      console.log(errorMovies);
+      console.log(errorMovies, 'errorMovie');
     }
   },
   deleteSavedMovie: async (movie) => {
