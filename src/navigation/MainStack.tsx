@@ -29,6 +29,7 @@ const MainStack = () => {
             backgroundColor: theme.colors.BACKGROUND_COLOR,
           },
           headerTintColor: theme.colors.TITLE_COLOR,
+          headerTitleAlign: 'center',
         }}
       />
       <Stack.Screen
@@ -40,6 +41,7 @@ const MainStack = () => {
             backgroundColor: theme.colors.BACKGROUND_COLOR,
           },
           headerTintColor: theme.colors.TITLE_COLOR,
+          headerTitleAlign: 'center',
         }}
       />
     </Stack.Navigator>

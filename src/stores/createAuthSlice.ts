@@ -7,14 +7,16 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
+  updateProfile,
 } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
-import { User } from 'types';
+import { User } from 'types/index';
 import { RegisterCredentials } from 'screens/Register';
 
 import { LoginCredentials } from 'screens/Login';
 import { MovieSlice } from './createMovieSlice';
 import { ThemeSlice } from './createThemeSlice';
+import { Alert } from 'react-native';
 
 export type AuthSlice = {
   authUser: User | null;
@@ -39,9 +41,9 @@ export const createAuthSlice: StateCreator<
     set({ loading: true });
     try {
       await onAuthStateChanged(auth, (currentUser) => {
-        if (currentUser?.email) {
+        if (currentUser?.email && currentUser?.displayName) {
           set({
-            authUser: { email: currentUser.email },
+            authUser: { email: currentUser.email, name: currentUser.displayName },
             error: null,
           });
         }
@@ -59,17 +61,26 @@ export const createAuthSlice: StateCreator<
 
     try {
       await createUserWithEmailAndPassword(auth, email, password);
+
+      if (auth?.currentUser) {
+        await updateProfile(auth.currentUser, {
+          displayName: name,
+        });
+      }
       await setDoc(doc(db, 'users', email), {
         savedMovies: [],
       });
+
       const createdUser = auth.currentUser;
-      if (createdUser?.email) {
+      if (createdUser?.email && createdUser?.displayName) {
         const payload = {
           email: createdUser.email,
+          name: createdUser.displayName,
         };
 
         set({ authUser: payload, error: null });
       }
+      Alert.alert(`Welcome, ${name}`);
     } catch (error: any) {
       set({ error: error.message });
       console.log(error);
@@ -83,12 +94,13 @@ export const createAuthSlice: StateCreator<
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      if (auth.currentUser?.email) {
+      if (auth.currentUser?.email && auth.currentUser?.displayName) {
         set({
-          authUser: { email: auth.currentUser.email },
+          authUser: { email: auth.currentUser.email, name: auth.currentUser.displayName },
           error: null,
         });
       }
+      Alert.alert(`Welcome, ${auth.currentUser?.displayName}`);
     } catch (error: any) {
       set({ error: error.message });
       console.log(error);
