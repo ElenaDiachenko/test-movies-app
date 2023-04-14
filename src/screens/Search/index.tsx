@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from 'styled-components';
@@ -9,8 +9,9 @@ import { InnerContainer, SearchBox } from './styles';
 import { API } from 'utils/index';
 import { VerticalList, Input } from 'components/index';
 import { useDebounce } from '../../hooks/index';
+import { HomeTabScreenProps } from 'navigation/types';
 
-const Search: FC = () => {
+const Search = ({ route }: HomeTabScreenProps<'Search'>) => {
   const theme = useTheme();
   const [query, setQuery] = useState('');
   const [renderData, setRenderData] = useState<MovieItemType[] | []>([]);
@@ -53,6 +54,7 @@ const Search: FC = () => {
           onEndReachedThreshold={0.5}
           isFetchingNextPage={isFetchingNextPage}
           notFoundMessage={`Not found movies by keyword ${query}`}
+          prevRoute={route.name}
         />
       ) : null}
     </Container>

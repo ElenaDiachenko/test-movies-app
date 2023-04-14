@@ -1,6 +1,6 @@
-import React, { useCallback } from 'react';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
+import React from 'react';
+
+import { useQuery } from '@tanstack/react-query';
 import { AntDesign } from '@expo/vector-icons';
 import { ScrollView, Image, StyleSheet, ActivityIndicator, View } from 'react-native';
 import { shallow } from 'zustand/shallow';
@@ -8,20 +8,19 @@ import { useTheme } from 'styled-components';
 
 import { useStore } from 'stores/store';
 import { GenreDataType } from 'types/index';
-import { DetailsScreenRouteProp, DetailsScreenNavigationProp } from 'navigation/types';
+import { HomeStackScreenProps } from 'navigation/types';
 import { PosterBox, PlayButton, AddButton, Overview, Rating } from './styles';
 
 import { Container, Title, ScreenWidth, ScreenHeight, Subtitle } from 'components/shared';
 import { API, constants } from 'utils/index';
-import { RowList } from 'components/index';
+import { RowList, Header } from 'components/index';
 const fakePoster = require('../../../assets/images/fake-poster-details.jpg');
 
-const Details = () => {
-  const route = useRoute<DetailsScreenRouteProp>();
-  const navigation = useNavigation<DetailsScreenNavigationProp>();
+const Details = ({ navigation, route }: HomeStackScreenProps<'Details'>) => {
   const theme = useTheme();
+  const navigate = () => navigation.goBack();
+  const { movieId, prevRoute } = route.params;
 
-  const { movieId } = route.params;
   const { data, isLoading, error } = useQuery({
     queryKey: ['movies', movieId],
     queryFn: () => API.fetchMovieById(movieId),
@@ -53,6 +52,7 @@ const Details = () => {
 
   return (
     <Container>
+      <Header prevRoute={prevRoute} navigate={navigate} title={'Details'} />
       <ScrollView>
         {data && (
           <>

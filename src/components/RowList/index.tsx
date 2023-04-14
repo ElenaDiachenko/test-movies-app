@@ -17,11 +17,13 @@ type RowPropsType = {
   fetchData: (page: number, movieId?: number) => Promise<TransformedMoviesType>;
   queryKey: string;
   movieId?: number;
+  prevRoute?: string;
 };
 
-const RowList: FC<RowPropsType> = ({ title, fetchData, queryKey, movieId }) => {
+const RowList: FC<RowPropsType> = ({ title, fetchData, queryKey, movieId, prevRoute }) => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
   const theme = useTheme();
+
   const { data, isLoading, error, isFetchingNextPage, hasNextPage, fetchNextPage } =
     useInfiniteQuery<TransformedMoviesType>({
       queryKey: [`${queryKey}`],
@@ -38,7 +40,7 @@ const RowList: FC<RowPropsType> = ({ title, fetchData, queryKey, movieId }) => {
   const renderItem = useCallback(
     ({ item }: any) => (
       <RowItem
-        onPress={() => navigation.navigate('Details', { movieId: item.id })}
+        onPress={() => navigation.navigate('Details', { movieId: item.id, prevRoute })}
         style={{
           aspectRatio: constants.ASPECT_RATIO,
         }}>

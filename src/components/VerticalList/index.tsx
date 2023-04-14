@@ -22,6 +22,7 @@ type VerticalListProps = {
   onEndReachedThreshold?: number;
   isFetchingNextPage?: boolean;
   notFoundMessage: string;
+  prevRoute?: string;
 };
 
 const VerticalList: FC<VerticalListProps> = ({
@@ -34,6 +35,7 @@ const VerticalList: FC<VerticalListProps> = ({
   onEndReachedThreshold,
   isFetchingNextPage,
   notFoundMessage,
+  prevRoute,
 }) => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
 
@@ -42,7 +44,7 @@ const VerticalList: FC<VerticalListProps> = ({
   const renderItem = useCallback(
     ({ item }: any) => (
       <ListItem
-        onPress={() => navigation.navigate('Details', { movieId: item.id })}
+        onPress={() => navigation.navigate('Details', { movieId: item.id, prevRoute })}
         style={{
           aspectRatio: constants.ASPECT_RATIO,
         }}>

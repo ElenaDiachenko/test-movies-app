@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { useRoute } from '@react-navigation/native';
 import { useQuery } from '@tanstack/react-query';
 import { ScrollView, ActivityIndicator } from 'react-native';
@@ -10,8 +10,10 @@ import { PlayerScreenRouteProp } from 'navigation/types';
 import { VideoDataType, VideoDataItemType } from 'types/index';
 import { API } from 'utils/index';
 
-const PlayVideo: FC = () => {
+const PlayVideo = () => {
   const route = useRoute<PlayerScreenRouteProp>();
+
+  const [currentVideo, setCurrentVideo] = useState('');
   const theme = useTheme();
   const { movieId } = route.params;
 
@@ -19,8 +21,6 @@ const PlayVideo: FC = () => {
     queryKey: ['videos', movieId],
     queryFn: () => API.fetchVideo(movieId),
   });
-
-  const [currentVideo, setCurrentVideo] = useState('');
 
   if (isLoading)
     return (
