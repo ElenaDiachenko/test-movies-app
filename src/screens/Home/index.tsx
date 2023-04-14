@@ -1,11 +1,12 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { ScrollView } from 'react-native';
 
 import { Container } from 'components/shared';
 import { constants } from 'utils/index';
 import RowList from 'components/RowList';
+import { HomeTabScreenProps } from 'navigation/types';
 
-const Home: FC = () => {
+const Home = ({ route }: HomeTabScreenProps<'Category'>) => {
   return (
     <Container>
       <ScrollView>
@@ -15,6 +16,7 @@ const Home: FC = () => {
             title={row.title}
             fetchData={row.fetchData}
             queryKey={row.queryKey}
+            prevRoute={route.name}
           />
         ))}
       </ScrollView>

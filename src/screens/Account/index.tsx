@@ -4,8 +4,9 @@ import { shallow } from 'zustand/shallow';
 import { useStore } from 'stores/store';
 import { Container } from 'components/shared';
 import VerticalList from 'components/VerticalList';
+import { HomeTabScreenProps } from 'navigation/types';
 
-const Account = () => {
+const Account = ({ route }: HomeTabScreenProps<'Account'>) => {
   const { movies, deleteMovie, isLoading, error } = useStore(
     (state) => ({
       error: state.errorMovies,
@@ -24,6 +25,7 @@ const Account = () => {
         numColumns={2}
         deleteMovie={deleteMovie}
         notFoundMessage={'No saved movie... '}
+        prevRoute={route.name}
       />
     </Container>
   );

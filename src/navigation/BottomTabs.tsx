@@ -31,7 +31,6 @@ const BottomTabs = () => {
 
   return (
     <MainTab.Navigator
-      initialRouteName={'Home'}
       screenOptions={({ route }) => ({
         tabBarShowLabel: false,
         tabBarHideOnKeyboard: true,
@@ -48,7 +47,7 @@ const BottomTabs = () => {
           let iconName: keyof typeof Ionicons.glyphMap | undefined;
           size = 25;
 
-          if (route.name === 'Home') {
+          if (route.name === 'Category') {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'Search') {
             iconName = focused ? 'search-circle' : 'search-circle-outline';
@@ -59,6 +58,7 @@ const BottomTabs = () => {
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
+
         headerStyle: {
           backgroundColor: theme.colors.BACKGROUND_COLOR,
           shadowColor: theme.colors.TITLE_COLOR,
@@ -86,7 +86,7 @@ const BottomTabs = () => {
         ),
         headerPressColor: theme.colors.ACCENT_COLOR,
       })}>
-      <MainTab.Screen name="Home" component={Screens.Home} />
+      <MainTab.Screen name="Category" component={Screens.Home} />
       <MainTab.Screen
         name="Search"
         component={Screens.Search}
